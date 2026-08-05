@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConversaRouteImport } from './routes/conversa'
+import { Route as PainelRouteImport } from './routes/painel'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const ConversaRoute = ConversaRouteImport.update({
   path: '/conversa',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PainelRoute = PainelRouteImport.update({
+  id: '/painel',
+  path: '/painel',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
@@ -32,30 +38,34 @@ const ApiChatRoute = ApiChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/conversa': typeof ConversaRoute
+  '/painel': typeof PainelRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/conversa': typeof ConversaRoute
+  '/painel': typeof PainelRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/conversa': typeof ConversaRoute
+  '/painel': typeof PainelRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/conversa' | '/api/chat'
+  fullPaths: '/' | '/conversa' | '/painel' | '/api/chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/conversa' | '/api/chat'
-  id: '__root__' | '/' | '/conversa' | '/api/chat'
+  to: '/' | '/conversa' | '/painel' | '/api/chat'
+  id: '__root__' | '/' | '/conversa' | '/painel' | '/api/chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ConversaRoute: typeof ConversaRoute
+  PainelRoute: typeof PainelRoute
   ApiChatRoute: typeof ApiChatRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConversaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/painel': {
+      id: '/painel'
+      path: '/painel'
+      fullPath: '/painel'
+      preLoaderRoute: typeof PainelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ConversaRoute: ConversaRoute,
+  PainelRoute: PainelRoute,
   ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
