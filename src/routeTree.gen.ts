@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConversaRouteImport } from './routes/conversa'
+import { Route as MetasRouteImport } from './routes/metas'
 import { Route as PainelRouteImport } from './routes/painel'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const ConversaRoute = ConversaRouteImport.update({
   id: '/conversa',
   path: '/conversa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MetasRoute = MetasRouteImport.update({
+  id: '/metas',
+  path: '/metas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PainelRoute = PainelRouteImport.update({
@@ -38,12 +44,14 @@ const ApiChatRoute = ApiChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/conversa': typeof ConversaRoute
+  '/metas': typeof MetasRoute
   '/painel': typeof PainelRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/conversa': typeof ConversaRoute
+  '/metas': typeof MetasRoute
   '/painel': typeof PainelRoute
   '/api/chat': typeof ApiChatRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/conversa': typeof ConversaRoute
+  '/metas': typeof MetasRoute
   '/painel': typeof PainelRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/conversa' | '/painel' | '/api/chat'
+  fullPaths: '/' | '/conversa' | '/metas' | '/painel' | '/api/chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/conversa' | '/painel' | '/api/chat'
-  id: '__root__' | '/' | '/conversa' | '/painel' | '/api/chat'
+  to: '/' | '/conversa' | '/metas' | '/painel' | '/api/chat'
+  id: '__root__' | '/' | '/conversa' | '/metas' | '/painel' | '/api/chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ConversaRoute: typeof ConversaRoute
+  MetasRoute: typeof MetasRoute
   PainelRoute: typeof PainelRoute
   ApiChatRoute: typeof ApiChatRoute
 }
@@ -83,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/conversa'
       fullPath: '/conversa'
       preLoaderRoute: typeof ConversaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/metas': {
+      id: '/metas'
+      path: '/metas'
+      fullPath: '/metas'
+      preLoaderRoute: typeof MetasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/painel': {
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ConversaRoute: ConversaRoute,
+  MetasRoute: MetasRoute,
   PainelRoute: PainelRoute,
   ApiChatRoute: ApiChatRoute,
 }
